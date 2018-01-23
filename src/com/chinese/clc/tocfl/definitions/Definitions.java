@@ -146,4 +146,14 @@ public class Definitions {
 	private String replaceNeutralTone(final String pinyin) {
 		return pinyin.replace("5", "");
 	}
+
+	public String getZhuyin(Term term) {
+		String zhuyin = "";
+		
+		List<LookupEntry> entries = parse(term);
+		List<String> definitions = entries.stream().map(entry -> PinyinTools.getInstance().markToBopomofo(entry.getPinyin())).distinct().collect(Collectors.toList());
+		zhuyin = String.join(" / ", definitions);
+		
+		return zhuyin;
+	}
 }

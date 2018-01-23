@@ -3,19 +3,26 @@ package com.chinese.clc.tocfl;
 import java.io.PrintWriter;
 import java.util.List;
 
+import com.chinese.clc.tocfl.definitions.Definitions;
+import com.github.pffy.chinese.HanyuPinyin;
+
 public class DeckWriter {
 
-	private String cleanDefinition(String definition) {
-		return definition.replaceAll("/", ",");
-	}
+	private String path;
+	private Definitions definitions = new Definitions();
 
-	private void dumpToFile(String file, List<Term> terms) {
-		
-		try (PrintWriter pvout = new PrintWriter(file, "UTF-8")) {
+	public DeckWriter(String path) {
+		this.path = path;
+	}
+	
+	public void dump(List<Term> terms) {
+
+		try (PrintWriter pvout = new PrintWriter(path, "UTF-8")) {
 			for (Term term : terms) {
 				pvout.println(makeLine(term));
 			}
 		} catch (Exception e) {
+			// TODO use log
 			e.printStackTrace();
 		}
 	}
@@ -31,7 +38,14 @@ public class DeckWriter {
 	}
 
 	private String makeLine(Term term) {
-		return String.join(";", getTermId(term), String.valueOf(term.getIndex()), term.getZh(), term.getType(),
-				term.getDomain(), term.getLevel());
+		String zhuyin = definitions.getZhuyin(term);
+		String definition = cleanSeparator(definitions.getDefinition(term));
+
+		return String.join(";", getTermId(term), String.valueOf(term.getIndex()), term.getZh(), term.getPinyin(),
+				zhuyin, term.getType(), term.getDomain(), definition, term.getLevel());
+	}
+
+	private String cleanSeparator(String definition) {
+		return definition.replace(';', ',');
 	}
 }

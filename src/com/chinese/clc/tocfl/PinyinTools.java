@@ -17,7 +17,6 @@ public class PinyinTools {
 	}
 
 	private HanyuPinyin hanyupinyin;
-	private Bopomofo bopomofo;
 
 	private PinyinTools() {
 		initialize();
@@ -25,7 +24,6 @@ public class PinyinTools {
 
 	private void initialize() {
 		hanyupinyin = new HanyuPinyin();
-		bopomofo = new Bopomofo(hanyupinyin);
 	}
 
 	// TODO this operation is slow, needs refactoring
@@ -42,7 +40,18 @@ public class PinyinTools {
 		hanyupinyin.setMode(Tone.TONE_NUMBERS);
 		hanyupinyin.setInput(pinyin);
 		// hanyupinyin.setMode(Tone.TONE_MARKS);
-		bopomofo.setInput(hanyupinyin);
+		Bopomofo bopomofo = new Bopomofo(hanyupinyin);
+
+		return bopomofo.toString().trim();
+	}
+
+	// TODO this operation is slow, needs refactoring
+	public String markToBopomofo(final String pinyin) {
+		hanyupinyin.setMode(Tone.TONE_MARKS);
+		hanyupinyin.setInput(pinyin);
+		//bopomofo needs tone numbers
+		hanyupinyin.setMode(Tone.TONE_NUMBERS);
+		Bopomofo bopomofo = new Bopomofo(hanyupinyin);
 
 		return bopomofo.toString().trim();
 	}

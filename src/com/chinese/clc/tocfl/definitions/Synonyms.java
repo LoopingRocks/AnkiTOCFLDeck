@@ -15,7 +15,14 @@ public class Synonyms extends Variants {
 		String[] words = entry.getZh().split("/");
 		String[] pinyins = entry.getPinyin().split("/");
 		for (int i = 0; i < words.length; i++) {
-			lookups.add(new LookupEntry(words[i], pinyins[i]));
+			try {
+				lookups.add(new LookupEntry(words[i], pinyins[i]));
+			} catch (Exception e) {
+				
+				System.out.println(entry.pinyin);
+				System.out.println(entry.zh);
+				e.printStackTrace();
+			}
 		}
 
 		return lookups;
