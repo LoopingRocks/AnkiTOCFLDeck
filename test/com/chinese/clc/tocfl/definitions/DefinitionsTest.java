@@ -95,10 +95,10 @@ public class DefinitionsTest {
 		// some terms don't agree on tone
 		// for example: lookup zh=便宜, pinyin=piányí | ccedict 便宜 便宜 [pian2 yi5]
 		assertEquals("cheap; inexpensive; small advantages; to let sb off lightly",
-				defs.getDefinition(new Term(0, "便宜", "piányí", "", "", "")));
+				defs.getDefinition(new Term(0, "便宜", "piányí", "", "", "", "")));
 
 		// ccedict uses "u:" for "ü"
 		// and the hanyupinyin lib uses "uu" for "ü"
-		assertEquals("female; woman; daughter", defs.getDefinition(new Term(0, "女", "nǚ", "", "", "")));
+		assertEquals("female; woman; daughter", defs.getDefinition(new Term(0, "女", "nǚ", "", "", "", "")));
 	}
 }

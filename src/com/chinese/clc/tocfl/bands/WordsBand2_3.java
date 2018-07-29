@@ -18,7 +18,7 @@ public class WordsBand2_3 extends WordsBand {
 		String type = parts[2].trim();
 		String number = parts[3].trim();
 		
-		Term term = new Term(Integer.parseInt(number), zh, pinyin, DOMAIN, type, level);
+		Term term = new Term(Integer.parseInt(number), zh, pinyin, DOMAIN, type, level, "");
 		return term;
 	}
 }

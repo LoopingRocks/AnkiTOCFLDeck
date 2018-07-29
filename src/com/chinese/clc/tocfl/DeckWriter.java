@@ -1,28 +1,32 @@
 package com.chinese.clc.tocfl;
 
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
-import com.chinese.clc.tocfl.definitions.Definitions;
-import com.github.pffy.chinese.HanyuPinyin;
+import com.chinese.clc.dict.ccedict.CCEDict;
 
 public class DeckWriter {
 
-	private String path;
-	private Definitions definitions = new Definitions();
-
-	public DeckWriter(String path) {
-		this.path = path;
-	}
-	
-	public void dump(List<Term> terms) {
-
-		try (PrintWriter pvout = new PrintWriter(path, "UTF-8")) {
-			for (Term term : terms) {
-				pvout.println(makeLine(term));
+	public void dumpToFile(List<Term> terms) {
+		
+		try {
+			URL url = CCEDict.class.getResource("/output/tocfl.txt");
+			Path filename = Paths.get(url.toURI());
+			
+			try (PrintWriter pvout = new PrintWriter(filename.toString(), "UTF-8")) {
+				for (Term term : terms) {
+					pvout.println(makeLine(term));
+				}
+			} catch (Exception e) {
+				//TODO log
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			// TODO use log
+		} catch (URISyntaxException e) {
+			// TODO log
 			e.printStackTrace();
 		}
 	}
@@ -30,22 +34,15 @@ public class DeckWriter {
 	private String getTermId(Term term) {
 		StringBuilder id = new StringBuilder();
 
-		id.append(term.getLevel());
-		id.append(" ");
+		id.append(term.getLevel().replace(" ", ""));
+		id.append("_");
 		id.append(String.format("%04d", term.getIndex()));
 
 		return id.toString();
 	}
 
 	private String makeLine(Term term) {
-		String zhuyin = definitions.getZhuyin(term);
-		String definition = cleanSeparator(definitions.getDefinition(term));
-
-		return String.join(";", getTermId(term), String.valueOf(term.getIndex()), term.getZh(), term.getPinyin(),
-				zhuyin, term.getType(), term.getDomain(), definition, term.getLevel());
-	}
-
-	private String cleanSeparator(String definition) {
-		return definition.replace(';', ',');
+		return String.join(";", getTermId(term), term.getZh(), term.getType(), term.getPinyin(),
+				term.getDefinition().replace(";", ","), term.getLevel());
 	}
 }

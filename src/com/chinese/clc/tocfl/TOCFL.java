@@ -4,37 +4,43 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.chinese.clc.tocfl.Levels.Band;
 import com.chinese.clc.tocfl.bands.WordsBand;
+import com.chinese.clc.tocfl.definitions.Definitions;
 
 public class TOCFL {
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		TOCFL tocfl = new TOCFL();
-		List<WordsBand> bands = tocfl.load();
-		DeckWriter writer = new DeckWriter("./output/tocfl.txt");
-		
-		List<Term> allTerms = new ArrayList<>();
-		bands.stream().map(b -> b.getEntries()).forEach(ts -> {
-			allTerms.addAll(ts);
-		});
-		
-		writer.dump(allTerms);
+		List<Term> terms = tocfl.load();
+
+		Definitions definitions = new Definitions();
+		List<Term> definedTerms = terms.stream().map(t -> new Term(t, definitions.getDefinition(t)))
+				.collect(Collectors.toList());
+
+		DeckWriter dw = new DeckWriter();
+		dw.dumpToFile( definedTerms);
 	}
-	
-	public List<WordsBand> load() {
-		List<WordsBand> bands = new ArrayList<>();
-		
+
+	public List<Term> load() {
+
+		List<Term> terms = new ArrayList<Term>();
+
 		for (Levels.Band band : Levels.Band.values()) {
 			for (Levels.Level level : band.getLevels()) {
 				WordsBand wordsBand = load(band, level);
-				bands.add(wordsBand);
+				List<Term> entries = wordsBand.getEntries();
+				if (!band.equals(Band.Band0))
+					Collections.shuffle(entries);
+				terms.addAll(entries);
 			}
 		}
-		
-		return bands;
+
+		return terms;
 	}
 
 	public WordsBand load(final Levels.Band band, final Levels.Level level) {

@@ -1,12 +1,10 @@
 package com.chinese.clc.tocfl.bands;
 
-import java.nio.file.Path;
-
 import com.chinese.clc.tocfl.Term;
 
 public class WordsBand0 extends WordsBand {
 
-	private int index = -1;
+	private int index = 1;
 
 	public WordsBand0(String level) {
 		super(level);
@@ -21,12 +19,6 @@ public class WordsBand0 extends WordsBand {
 		return type;
 	}
 
-	public void load(Path path) {
-		index = 1;
-		super.load(path);
-		index = -1;
-	}
-
 	@Override
 	protected Term parseLine(String line) {
 		String[] parts = line.split(";");
@@ -35,7 +27,7 @@ public class WordsBand0 extends WordsBand {
 		String pinyin = parts[2].trim();
 		String type = getWordType(parts);
 
-		Term term = new Term(index++, zh, pinyin, domain, type, level);
+		Term term = new Term(index++, zh, pinyin, domain, type, level, "");
 		return term;
 	}
 }

@@ -18,11 +18,10 @@ import java.util.stream.Stream;
 public class CCEDict {
 
 	protected static Pattern EntryPattern = Pattern.compile("^(.+) (.+) \\[(.+)\\] /(.+)/$");
-	protected static Pattern TaiwanPrPattern = Pattern.compile("Taiwan pr. \\[(.+)\\]");
 
 	List<CCEDictEntry> entries = new ArrayList<>();
 
-	Map<String, List<CCEDictEntry>> byTraditional, byPinyinTW;
+	Map<String, List<CCEDictEntry>> byTraditional;
 
 	public CCEDict() {
 	}
@@ -30,11 +29,7 @@ public class CCEDict {
 	private String formatDefinition(final String definition) {
 		// slash "/" are changed to semicolon ";" to deal with the fact that "/" is
 		// already used as a separator for term variants
-		return definition.replaceAll("/", "; ");
-	}
-
-	public List<CCEDictEntry> getByPinyinTW(final String pinyin) {
-		return byPinyinTW.get(pinyin);
+		return definition.replaceAll("/", ", ");
 	}
 
 	public List<CCEDictEntry> getByTrad(final String trad) {
@@ -44,7 +39,6 @@ public class CCEDict {
 	private void initializeLookups() {
 		// TODO DESIGN make it lazy
 		byTraditional = entries.stream().collect(Collectors.groupingBy(CCEDictEntry::getZhTR));
-		byPinyinTW = entries.stream().collect(Collectors.groupingBy(CCEDictEntry::getPinyinTW));
 	}
 
 	private boolean isComment(final String line) {
@@ -88,23 +82,12 @@ public class CCEDict {
 		Matcher matcher = CCEDict.EntryPattern.matcher(line);
 		if (matcher.matches()) {
 			entry = new CCEDictEntry(matcher.group(1), matcher.group(2), matcher.group(3),
-					parseTWPinyin(matcher.group(3), matcher.group(4)), formatDefinition(matcher.group(4)));
+					formatDefinition(matcher.group(4)));
 		} else {
 			// TODO log
 			System.out.println(line);
 		}
 
 		return entry;
-	}
-
-	private String parseTWPinyin(final String defaultPinyin, final String definition) {
-		String pinyin = defaultPinyin;
-
-		Matcher matcher = TaiwanPrPattern.matcher(definition);
-		if (matcher.find()) {
-			pinyin = matcher.group(1);
-		}
-
-		return pinyin;
 	}
 }

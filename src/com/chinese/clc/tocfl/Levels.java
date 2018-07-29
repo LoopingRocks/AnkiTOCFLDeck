@@ -57,8 +57,6 @@ public class Levels {
 		name.append(band.name());
 		name.append(" ");
 		name.append(level.name());
-		name.append(" ");
-		name.append(level.description());
 		return name.toString();
 	}
 

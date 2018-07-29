@@ -1,14 +1,13 @@
 package com.chinese.clc.dict.ccedict;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
-import java.util.regex.Matcher;
 
 import org.junit.Test;
-
-import com.chinese.clc.dict.ccedict.CCEDict;
 
 public class CCEDictTest {
 
@@ -28,8 +27,6 @@ public class CCEDictTest {
 		assertEquals("一场空", entry.getZhSM());
 		// pinyin
 		assertEquals("yi1 chang2 kong1", entry.getPinyin());
-		// pinyin
-		assertEquals("yi1 chang2 kong1", entry.getPinyinTW());
 		// def
 		assertEquals("all one's hopes and efforts come to nothing/futile", entry.getDefinition());
 	}
@@ -50,8 +47,6 @@ public class CCEDictTest {
 		assertEquals("一回生两回熟", entry.getZhSM());
 		// pinyin
 		assertEquals("yi1 hui2 sheng1 liang3 hui2 shu2", entry.getPinyin());
-		// pinyin
-		assertEquals("yi1 hui2 sheng1 liang3 hui2 shu2", entry.getPinyinTW());
 		// def
 		assertEquals("see 一回生二回熟[yi1 hui2 sheng1 er4 hui2 shu2]", entry.getDefinition());
 	}
@@ -72,8 +67,6 @@ public class CCEDictTest {
 		assertEquals("识", entry.getZhSM());
 		// pinyin
 		assertEquals("shi2", entry.getPinyin());
-		// pinyin
-		assertEquals("shi4", entry.getPinyinTW());
 		// def
 		assertEquals("to know/knowledge/Taiwan pr. [shi4]", entry.getDefinition());
 	}

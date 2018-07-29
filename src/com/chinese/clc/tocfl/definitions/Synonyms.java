@@ -12,17 +12,15 @@ public class Synonyms extends Variants {
 	public List<LookupEntry> analyse(final LookupEntry entry) {
 		List<LookupEntry> lookups = new ArrayList<>();
 
-		String[] words = entry.getZh().split("/");
-		String[] pinyins = entry.getPinyin().split("/");
-		for (int i = 0; i < words.length; i++) {
-			try {
+		try {
+			String[] words = entry.getZh().split("/");
+			String[] pinyins = entry.getPinyin().split("/");
+			for (int i = 0; i < words.length; i++) {
 				lookups.add(new LookupEntry(words[i], pinyins[i]));
-			} catch (Exception e) {
-				
-				System.out.println(entry.pinyin);
-				System.out.println(entry.zh);
-				e.printStackTrace();
 			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			//TODO log
+			e.printStackTrace();
 		}
 
 		return lookups;
