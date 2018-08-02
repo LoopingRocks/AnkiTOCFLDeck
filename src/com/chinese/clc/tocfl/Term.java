@@ -4,33 +4,24 @@ public class Term implements Comparable<Term> {
 
 	private int index;
 
-	private String zh;
+	private String zhTrad;
+	private String zhSimpl;
 	private String pinyin;
 	private String domain;
 	private String type;
 	private String definition;
 	private String level;
 
-	public Term(final int number, final String zh, final String pinyin, final String domain, final String type,
-			final String level, String definition) {
+	public Term(final int number, final String zhTrad, String zhSimpl, final String pinyin, final String domain,
+			final String type, final String level, String definition) {
 		super();
 		this.index = number;
-		this.zh = zh;
+		this.zhTrad = zhTrad;
+		this.zhSimpl = zhSimpl;
 		this.pinyin = pinyin;
 		this.domain = domain;
 		this.type = type;
 		this.level = level;
-		this.definition = definition;
-	}
-	
-	public Term(Term t, String definition) {
-		super();
-		this.index = t.index;
-		this.zh = t.zh;
-		this.pinyin = t.pinyin;
-		this.domain = t.domain;
-		this.type = t.type;
-		this.level = t.level;
 		this.definition = definition;
 	}
 	
@@ -71,10 +62,10 @@ public class Term implements Comparable<Term> {
 				return false;
 		} else if (!type.equals(other.type))
 			return false;
-		if (zh == null) {
-			if (other.zh != null)
+		if (zhTrad == null) {
+			if (other.zhTrad != null)
 				return false;
-		} else if (!zh.equals(other.zh))
+		} else if (!zhTrad.equals(other.zhTrad))
 			return false;
 		return true;
 	}
@@ -99,8 +90,8 @@ public class Term implements Comparable<Term> {
 		return type;
 	}
 
-	public String getZh() {
-		return zh;
+	public String getZhTrad() {
+		return zhTrad;
 	}
 
 	@Override
@@ -112,17 +103,22 @@ public class Term implements Comparable<Term> {
 		result = prime * result + ((level == null) ? 0 : level.hashCode());
 		result = prime * result + ((pinyin == null) ? 0 : pinyin.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		result = prime * result + ((zh == null) ? 0 : zh.hashCode());
+		result = prime * result + ((zhTrad == null) ? 0 : zhTrad.hashCode());
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Term [index=%s, zh=%s, pinyin=%s, domain=%s, type=%s, definition=%s, level=%s]", index,
-				zh, pinyin, domain, type, definition, level);
+		return String.format(
+				"Term [index=%s, zhTrad=%s, zhSimpl=%s, pinyin=%s, domain=%s, type=%s, definition=%s, level=%s]", index,
+				zhTrad, zhSimpl, pinyin, domain, type, definition, level);
 	}
 
 	public String getDefinition() {
 		return definition;
+	}
+
+	public String getZhSimpl() {
+		return zhSimpl;
 	}
 }

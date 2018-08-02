@@ -27,7 +27,7 @@ public class WordsBand0 extends WordsBand {
 		String pinyin = parts[2].trim();
 		String type = getWordType(parts);
 
-		Term term = new Term(index++, zh, pinyin, domain, type, level, "");
+		Term term = new Term(index++, zh, null, pinyin, domain, type, level, "");
 		return term;
 	}
 }

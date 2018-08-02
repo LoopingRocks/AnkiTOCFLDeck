@@ -14,7 +14,7 @@ public class DeckWriter {
 	public void dumpToFile(List<Term> terms) {
 		
 		try {
-			URL url = CCEDict.class.getResource("/output/tocfl.txt");
+			URL url = CCEDict.class.getResource("/tocfl.txt");
 			Path filename = Paths.get(url.toURI());
 			
 			try (PrintWriter pvout = new PrintWriter(filename.toString(), "UTF-8")) {
@@ -42,7 +42,7 @@ public class DeckWriter {
 	}
 
 	private String makeLine(Term term) {
-		return String.join(";", getTermId(term), term.getZh(), term.getType(), term.getPinyin(),
+		return String.join(";", getTermId(term), term.getZhTrad(), term.getZhSimpl(), term.getType(), term.getPinyin(),
 				term.getDefinition().replace(";", ","), term.getLevel());
 	}
 }

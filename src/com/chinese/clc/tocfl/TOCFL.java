@@ -19,11 +19,10 @@ public class TOCFL {
 		List<Term> terms = tocfl.load();
 
 		Definitions definitions = new Definitions();
-		List<Term> definedTerms = terms.stream().map(t -> new Term(t, definitions.getDefinition(t)))
-				.collect(Collectors.toList());
+		List<Term> definedTerms = terms.stream().map(t -> definitions.augment(t)).collect(Collectors.toList());
 
 		DeckWriter dw = new DeckWriter();
-		dw.dumpToFile( definedTerms);
+		dw.dumpToFile(definedTerms);
 	}
 
 	public List<Term> load() {
