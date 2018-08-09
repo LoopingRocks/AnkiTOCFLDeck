@@ -14,8 +14,9 @@ public class DeckWriter {
 	public void dumpToFile(List<Term> terms) {
 		
 		try {
-			URL url = CCEDict.class.getResource("/tocfl.txt");
-			Path filename = Paths.get(url.toURI());
+			URL url = CCEDict.class.getResource("/");
+			Path root = Paths.get(url.toURI());
+			Path filename = root.resolve("tocfl.txt");
 			
 			try (PrintWriter pvout = new PrintWriter(filename.toString(), "UTF-8")) {
 				for (Term term : terms) {

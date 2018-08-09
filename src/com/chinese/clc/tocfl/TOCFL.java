@@ -51,7 +51,12 @@ public class TOCFL {
 			for (String path : paths) {
 				try {
 					URL resource = TOCFL.class.getResource(path);
-					words.load(Paths.get(resource.toURI()));
+					if (resource != null)
+						words.load(Paths.get(resource.toURI()));
+					else
+					{
+						//TODO log null pointer
+					}
 				} catch (URISyntaxException e) {
 					// TODO log
 					e.printStackTrace();

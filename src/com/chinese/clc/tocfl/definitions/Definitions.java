@@ -62,9 +62,9 @@ public class Definitions {
 			// take all the competing entries, even if pinyin doesn't match
 			// and separate them, this way the deck is complete and irrelevant definitions
 			// can be easily deleted on review
-			List<String> lookups = dictEntries.stream().map(extractor).distinct().collect(Collectors.toList());
+			List<String> lookups = dictEntries.stream().map(extractor).sorted().distinct().collect(Collectors.toList());
 			// seems like the cedict is ordered by the relevant last
-			Collections.reverse(lookups);
+			//Collections.reverse(lookups);
 
 			info = String.join(" | ", lookups);
 		}
