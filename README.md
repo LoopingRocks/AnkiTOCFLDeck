@@ -1,2 +1,2 @@
 # AnkiTOCFLDeck
-A java based programm generating an Anki Deck for TOCFL (chinese test in Taiwan)
+A java based program generating an Anki Deck for TOCFL (chinese test in Taiwan)
